@@ -2,9 +2,8 @@
 
   const connectDb  = async () => {
     try {
-        await mongoose.connect("mongodb+srv://Indrajeet_Yadav:betuxyz993648@cluster0.qbu6kc8.mongodb.net/", {
+        await mongoose.connect("mongodb+srv://indrajeetyadav993648:betuxyz993648@tutor.mxiy9.mongodb.net/Tutor", {
         });
-        // console.log("Database Connected Successfully 1");
     } catch (error) {
         console.log("Database Connection Failed");
     }
