@@ -4,22 +4,18 @@
 
  const connectDB = require('./config/database');
 
+
+ app.use(express.json());
  app.post("/signup" ,  async (req, res) => {
-    // logic goes here ...
-     const userObj = {
-        firstName :"Indrajeet ",
-        lastName :"Yadav",
-        emailId : " indra@gmail.com",
-        age: 25,
-        password :"123456",
-        gender :" Male"
-     }
-     // creating a  new instance of userModel
-     const  user  = new User(userObj);
 
-     await user.save();
-     res.send("User Created Successfully");
-
+    // Creating  a new instance  of the  User model....
+    const user  = new  User(req.body);
+    try {
+        await user.save();
+        res.status(201).send("User Created Successfully");
+    } catch (error) {
+        res.status(500).send(" An error  occurred while saving the user");
+    }
  })
 
   connectDB()
@@ -31,4 +27,6 @@
    })
    .catch((error) => {
          console.log("Database Connection Failed");
-   })
+   })   
+
+   
