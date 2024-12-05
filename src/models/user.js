@@ -2,7 +2,10 @@ const mongoose  = require('mongoose');
  const userSchema   =  new mongoose.Schema({
     firstName:{
         type:String,
-        required:true
+        required:true,
+        minlength:3,
+        maxlength:20,
+        trim:true
     },
     lastName:{
         type:String,
@@ -10,7 +13,9 @@ const mongoose  = require('mongoose');
     },
     emailId:{
         type:String,
-        required:true
+        required:true,
+        unique:true,
+        trim:true
     },
     password:{
         type:String,
