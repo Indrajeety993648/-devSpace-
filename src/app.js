@@ -103,48 +103,10 @@ app.get("/profile", userAuth, async (req, res) => {
     }
   });
   
-
-// Feed API 
-
- app.get("/feed" , async (req, res) => {
-
-
-    try{
-        const  userData  =  await  User.find({});
-        res.send(userData);
-    }
-    catch (error) {
-        console.error(error);
-         res.status(500).send("An error  occurred  while fetching the data !!")
-    }
- });
-
-
- app.delete("/user" , async(req, res) =>{
-    const userId  = req.body.userId;
-    try{
-        const user  =  await   User.findByIdAndDelete(userId);
-        res.send("User deleted Successfully!!");
-    }
-    catch(error){
-        console.error(error);
-        res.status(500).send("An error occurred while deleting the user");
-    }
- });
-
-
-app.patch("/user" , async(req, res) =>{
-    const userId  = req.body.userId;
-    const updateData = req.body;
-    try{
-        const user = await User.findByIdAndUpdate(userId, updateData);
-        res.send("User updated successfully!!");
-    }
-    catch(error){
-        console.error(error);
-        res.status(500).send("An error occurred while updating the user");
-    }
-});
+ app.post("/sendConnectionREquest" , userAuth , async(req, res) =>{
+     consnole.log("Sending a Connection Request");
+     res.send(" connection REquest Sent ");
+ })
 
 connectDB()
     .then(() => {
