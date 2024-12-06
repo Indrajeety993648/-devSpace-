@@ -13,7 +13,7 @@ authRouter.post("/signup" , async(req, res) =>{
         // then  store  hsshed  password in database ..
         // then save the user  in the database ..
         // then send the response to the user  that user is created successfully ..
-        
+
           validateSignUp(req);
           const{fisrtName , lastName , emailId , password} = req.body;
           const  passwordHash  = await bcrypt.hash(password , 10);
@@ -26,6 +26,33 @@ authRouter.post("/signup" , async(req, res) =>{
      catch(error){
         res.status(500).send(" Registration failed ! , Please try again ");
      }
-})
+});
+
+
+/// login Api 
+ authRouter.post("/login" , async(req, res) =>{
+    try{
+        const {emailId , password} = req.body;
+        const user   = await User.findOne({emailId});
+        if(!user){
+            throw new Error("Invalid Credentials, Please try again !!");
+        }
+        const isValidPassword = await bcrypt.compare(password , user.password);
+        if(isValidPassword){
+            const token  = jwt.sign({_id :user._id} , "Indrajeet9936@");
+            res.cookie("token" , token);
+            res.send("Login Successfull ");
+        }
+        if(!isValidPassword){
+            throw new Error("Invalid Credentials, Please try again !!");
+        }
+
+    }
+    catch(error){
+        res.status(404).send("An error occurred while login !!");
+    }
+ })
+
+ 
 
 module.exports = authRouter;
